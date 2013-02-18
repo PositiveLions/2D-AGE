@@ -1,5 +1,7 @@
 *.cbp
 *.layout
 *.depend
+allegro.log
+AGE.log
 bin/
 obj/
