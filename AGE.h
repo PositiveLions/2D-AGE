@@ -12,10 +12,17 @@
 class Engine
 {
 private:
-    bool isRunning;
+    ALLEGRO_DISPLAY* screen;
+    int screenWidth;
+    int screenHeight;
+    ALLEGRO_EVENT_QUEUE* displayEvents;
 
 public:
-    Engine();
+    bool isRunning;
+
+    Engine(int w, int h, int dispFlags);
+    ~Engine();
+    void handleDisplayEvents();
 
 };
 

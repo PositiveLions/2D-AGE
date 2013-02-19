@@ -4,7 +4,15 @@
 int main(int argc, char* argv[])
 {
 
-    Engine e;
+    Engine e(800, 600, ALLEGRO_WINDOWED);
+
+
+    while(e.isRunning)
+    {
+        e.handleDisplayEvents();
+
+        al_flip_display();
+    }
 
 
 
