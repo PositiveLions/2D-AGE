@@ -101,7 +101,7 @@ Engine::~Engine()
 {
 
     std::cout << "Shutting down (A)llegro (G)ame (E)ngine...\n";
-    std::cout << "============================================";
+    std::cout << "==========================================\n";
 
     //clean-up
     std::cout << "Destroying event queues...";
