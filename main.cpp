@@ -24,12 +24,19 @@ int main(int argc, char* argv[])
     //Initialize AGE
     myEngine e(800, 600, ALLEGRO_WINDOWED);
 
+    TileMapping testMapping;
+    testMapping.loadFromFile("test.tmap");
+
+    Screen s(25, 18);
+
     //Main game loop
     while(e.isRunning)
     {
         //Event processing
         e.handleDisplayEvents();
         e.handleKeyboardEvents();
+
+        al_draw_bitmap(testMapping.getImage(0), 200, 200, 0);
 
         //Blit the primary surface to the monitor
         al_flip_display();
