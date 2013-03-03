@@ -8,8 +8,6 @@
     This class also defines the pure-virtual function keyboardInput - necessary
     for handling keyboard input.
 */
-class TileMap2;
-
 class myEngine : public Engine
 {
     private:
