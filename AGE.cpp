@@ -113,17 +113,17 @@ Engine::Engine(int w, int h, int dispFlags)
     keyboardEvents = al_create_event_queue();
 
     //Attach event sources to their corresponding event queues
-    //TODO:
     al_register_event_source(displayEvents, al_get_display_event_source(screen));
     al_register_event_source(keyboardEvents, al_get_keyboard_event_source());
     std::cout << "Done!\n";
 
 }
 
+
 /*
     Destructor for the Engine class.  Performs necessary clean-up for the game
     engine.  Currently only unregisters event sources from their corresponding
-    event queues and destroys the queues.  Also releases the primary surface.
+    event queues and destroys the queues.  Also, releases the primary surface.
 */
 Engine::~Engine()
 {
@@ -131,11 +131,12 @@ Engine::~Engine()
     std::cout << "Shutting down (A)llegro (G)ame (E)ngine...\n";
     std::cout << "==========================================\n";
 
-    //Unregister event sources and destroy event queues
+    //Unregister event sources
     std::cout << "Destroying event queues...";
     al_unregister_event_source(displayEvents, al_get_display_event_source(screen));
     al_unregister_event_source(keyboardEvents, al_get_keyboard_event_source());
 
+    //Destroy event queues
     al_destroy_event_queue(displayEvents);
     al_destroy_event_queue(keyboardEvents);
     std::cout << "Done!\n";
@@ -175,8 +176,11 @@ void Engine::handleDisplayEvents()
 void Engine::handleKeyboardEvents()
 {
 
+    //Temporary ALLEGRO_EVENT created to copy the event to be processed to
     ALLEGRO_EVENT tempEvent;
 
+    //While there are events in the keyboardEvents event queue, copy them to
+    //tempEvent and call the event specific version of keyboardInput(...)
     while(al_get_next_event(keyboardEvents, &tempEvent))
     {
         switch(tempEvent.type)

@@ -11,7 +11,9 @@
 class myEngine : public Engine
 {
     private:
+        //this is defined below main()
         void keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode);
+
     public:
         myEngine(int w, int h, int dispType) : Engine(w, h, dispType) {}
 };
@@ -24,10 +26,16 @@ int main(int argc, char* argv[])
     //Initialize AGE
     myEngine e(800, 600, ALLEGRO_WINDOWED);
 
+    //Create a tileMapping and populate it with data from "test.tmap"
     TileMapping testMapping;
     testMapping.loadFromFile("test.tmap");
 
-    Screen s(25, 18);
+    //Create a map named "Test Map" from the file "test.map"
+    TileMap myMap("Test Map", "test.map");
+    //Set myMap's tileMapping (tileset) to testMapping's
+    myMap.setTileMapping(&testMapping);
+
+
 
     //Main game loop
     while(e.isRunning)
@@ -36,7 +44,9 @@ int main(int argc, char* argv[])
         e.handleDisplayEvents();
         e.handleKeyboardEvents();
 
-        al_draw_bitmap(testMapping.getImage(0), 200, 200, 0);
+        //al_draw_bitmap(testMapping.getImage(0), 200, 200, 0);
+        myMap.DrawMap(0);
+
 
         //Blit the primary surface to the monitor
         al_flip_display();
@@ -53,6 +63,7 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
 
     switch(kbdEventType)
     {
+        //Key pressed event
         case KEY_DOWN:
             switch(keyCode)
             {
@@ -65,6 +76,7 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
             }
             break;
 
+        //Key released event
         case KEY_UP:
             switch(keyCode)
             {
