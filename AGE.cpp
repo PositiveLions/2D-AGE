@@ -119,6 +119,11 @@ Engine::Engine(int w, int h, int dispFlags)
 
 }
 
+ALLEGRO_DISPLAY* Engine::getDisplay()
+{
+    return screen;
+}
+
 
 /*
     Destructor for the Engine class.  Performs necessary clean-up for the game

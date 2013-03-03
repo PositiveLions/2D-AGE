@@ -50,8 +50,8 @@ class TileMapping
 class Tile
 {
     private:
-    static int dimension;
-    unsigned int key;
+        static int dimension;
+        unsigned int key;
 
     public:
         Tile();
@@ -104,18 +104,29 @@ class TileMap : public mapBase
 
         TileMapping* tMap;
         std::vector<Screen*> screens;
+
+        ALLEGRO_BITMAP* loadedScreen;
+        bool needsUpdate;
+        unsigned int currentScreen;
+
         bool loadFromFile(std::string filename);
 
     public:
         TileMap(std::string mapName, std::string filename);
         ~TileMap();
+
+        enum DIRECTION {UP, DOWN, LEFT, RIGHT};
+
         void setTileMapping(TileMapping* tMap);
         //TODO: since screens and tiles are in a one dimensional vector I should
         //      make static functions to get screens above, below, to the left,
         //      and to the right of the current screen - simple math but it
         //      shouldn't be the end-users responsibility to compute these
         //      values
-        void DrawMap(unsigned int screenNum);
+        void DrawMap(ALLEGRO_DISPLAY* display);
+
+        void changeScreen(DIRECTION direction);
+
 
 
 };

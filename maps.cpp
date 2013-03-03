@@ -178,6 +178,10 @@ bool TileMap::loadFromFile(std::string filename)
 
     file.close();
 
+    loadedScreen = al_create_bitmap((screenWidthInTiles * tileDimension), (screenHeightInTiles * tileDimension));
+    needsUpdate = true;
+    currentScreen = 0;
+
     return (!hasFailed);
 
 }
@@ -196,29 +200,78 @@ void TileMap::setTileMapping(TileMapping* tMap)
 //draw call to the GPU instead of:
 //(screenWidthInTiles * screenHeightInTiles) draw calls
 //This should be significantly faster.
-void TileMap::DrawMap(unsigned int screenNum)
+void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 {
 
     unsigned int tileKey;
 
-    //for all tiles
-    for(unsigned int t = 0; t <= ((screenWidthInTiles * screenHeightInTiles) - 1); t++)
+    if(needsUpdate)
     {
-        //for every column
-        for(unsigned int y = 0; y <= (screenHeightInTiles - 1); y++)
-        {
-            //each row
-            for(unsigned int x = 0; x <= (screenWidthInTiles - 1); x++)
-            {
-                tileKey = screens[screenNum]->getTile(t)->getKey();
+        al_set_target_bitmap(loadedScreen);
 
-                al_draw_bitmap(tMap->getImage(tileKey), (x * tileDimension), (y * tileDimension), 0);
+        //for all tiles
+        for(unsigned int t = 0; t <= ((screenWidthInTiles * screenHeightInTiles) - 1); t++)
+        {
+            //for every column
+            for(unsigned int y = 0; y <= (screenHeightInTiles - 1); y++)
+            {
+                //each row
+                for(unsigned int x = 0; x <= (screenWidthInTiles - 1); x++)
+                {
+                    tileKey = screens[currentScreen]->getTile(t)->getKey();
+
+                    al_draw_bitmap(tMap->getImage(tileKey), (x * tileDimension), (y * tileDimension), 0);
+                }
+
             }
 
         }
 
+        al_set_target_backbuffer(display);
+        needsUpdate = false;
+
     }
 
+    al_draw_bitmap(loadedScreen, 0, 0, 0);
+
+}
+
+//TODO: add safeties for not loading screens that arent there
+void TileMap::changeScreen(DIRECTION direction)
+{
+
+    switch(direction)
+    {
+    case UP:
+        if(currentScreen >= (widthInScreens + 1))
+        {
+            currentScreen -= widthInScreens;
+        }
+        break;
+
+    case DOWN:
+        if(currentScreen <= (widthInScreens * (heightInScreens - 1)))
+        {
+            currentScreen += widthInScreens;
+        }
+        break;
+
+    case LEFT:
+        if(currentScreen != 0)
+        {
+            currentScreen--;
+        }
+        break;
+
+    case RIGHT:
+        if(currentScreen == (widthInScreens * heightInScreens))
+        {
+            currentScreen++;
+        }
+        break;
+    }
+
+    needsUpdate = true;
 }
 
 //Cleans up after TileMap objects

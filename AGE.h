@@ -41,6 +41,8 @@ public:
 
     bool isRunning;     //Use this for the main game loop
 
+    ALLEGRO_DISPLAY* getDisplay();
+
     //Event handling functions
     void handleDisplayEvents();
     void handleKeyboardEvents();

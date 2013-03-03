@@ -3,5 +3,4 @@
 *.depend
 allegro.log
 AGE.log
-bin/
-obj/
+/obj
