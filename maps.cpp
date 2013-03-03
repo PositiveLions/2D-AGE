@@ -122,6 +122,18 @@ Screen::~Screen()
 }
 
 
+TileMap::TileMap()
+{
+    name = "";
+    currentScreen = 0;
+    widthInScreens = 0;
+    heightInScreens = 0;
+    screenWidthInTiles = 0;
+    screenHeightInTiles = 0;
+    tileDimension = 0;
+}
+
+
 //Creates a TileMap object with the specified name from the specified file
 //NOTE: calls loadFromFile(filename)
 TileMap::TileMap(std::string mapName, std::string filename)
@@ -130,6 +142,7 @@ TileMap::TileMap(std::string mapName, std::string filename)
 
     TileMap::loadFromFile(filename);
 }
+
 
 //Loads a tilemap from a *.map file - gets called from the constructor
 //TODO: possibly make this private?
@@ -204,6 +217,8 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
     {
         al_set_target_bitmap(loadedScreen);
 
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+
         //for all tiles
         for(unsigned int t = 0; t <= ((screenWidthInTiles * screenHeightInTiles) - 1); t++)
         {
@@ -234,39 +249,61 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 //Changes necessary data so that DrawMap() will draw the next screen
 void TileMap::changeScreen(DIRECTION direction)
 {
+    bool hasFailed = false;
 
     switch(direction)
     {
     case UP:
-        if(currentScreen >= (widthInScreens + 1))
+        if(currentScreen >= widthInScreens)
         {
             currentScreen -= widthInScreens;
+        }
+        else
+        {
+            hasFailed = true;
         }
         break;
 
     case DOWN:
-        if(currentScreen <= (widthInScreens * (heightInScreens - 1)))
+        if(currentScreen <= (((widthInScreens * heightInScreens) - 1) - widthInScreens))
         {
             currentScreen += widthInScreens;
+        }
+        else
+        {
+            hasFailed = true;
         }
         break;
 
     case LEFT:
-        if(currentScreen != 0)
+        if((currentScreen % widthInScreens) != 0)
         {
             currentScreen--;
+        }
+        else
+        {
+            hasFailed = true;
         }
         break;
 
     case RIGHT:
-        if(currentScreen == (widthInScreens * heightInScreens))
+        if(((currentScreen + 1) % widthInScreens) != 0)
         {
             currentScreen++;
+        }
+        else
+        {
+            hasFailed = true;
         }
         break;
     }
 
-    needsUpdate = true;
+    //if this hasn't failed tell it to update on next draw
+    if(!hasFailed)
+    {
+        needsUpdate = true;
+    }
+
 }
 
 //Cleans up after TileMap objects
@@ -279,4 +316,7 @@ TileMap::~TileMap()
     {
         delete screens[x];
     }
+
+    //Destroys the ALLEGRO_BITMAP of the currently loaded screen
+    al_destroy_bitmap(loadedScreen);
 }

@@ -14,8 +14,10 @@ class myEngine : public Engine
         //this is defined below main()
         void keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode);
 
+
     public:
         myEngine(int w, int h, int dispType) : Engine(w, h, dispType) {}
+        TileMap myMap;
 };
 
 
@@ -31,9 +33,10 @@ int main(int argc, char* argv[])
     testMapping.loadFromFile("test.tmap");
 
     //Create a map named "Test Map" from the file "test.map"
-    TileMap myMap("Test Map", "test2.map");
+    //TileMap myMap("Test Map", "test2.map");
     //Set myMap's tileMapping (tileset) to testMapping's
-    myMap.setTileMapping(&testMapping);
+    e.myMap.setTileMapping(&testMapping);
+    e.myMap.loadFromFile("test2.map");
 
 
 
@@ -46,7 +49,7 @@ int main(int argc, char* argv[])
 
 
 
-        myMap.DrawMap(e.getDisplay());
+        e.myMap.DrawMap(e.getDisplay());
 
 
         //Blit the primary surface to the monitor
@@ -75,7 +78,19 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
                     break;
 
                 case ALLEGRO_KEY_RIGHT:
-                    //myMap.changeScreen(TileMap::RIGHT);
+                    myMap.changeScreen(TileMap::RIGHT);
+                    break;
+
+                case ALLEGRO_KEY_LEFT:
+                    myMap.changeScreen(TileMap::LEFT);
+                    break;
+
+                case ALLEGRO_KEY_UP:
+                    myMap.changeScreen(TileMap::UP);
+                    break;
+
+                case ALLEGRO_KEY_DOWN:
+                    myMap.changeScreen(TileMap::DOWN);
                     break;
 
                 default:

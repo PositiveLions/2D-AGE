@@ -109,13 +109,16 @@ class TileMap : public mapBase
         bool needsUpdate;
         unsigned int currentScreen;
 
-        bool loadFromFile(std::string filename);
+
 
     public:
+        TileMap();
         TileMap(std::string mapName, std::string filename);
         ~TileMap();
 
         enum DIRECTION {UP, DOWN, LEFT, RIGHT};
+
+        bool loadFromFile(std::string filename);
 
         void setTileMapping(TileMapping* tMap);
         //TODO: since screens and tiles are in a one dimensional vector I should
