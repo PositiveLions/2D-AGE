@@ -194,12 +194,7 @@ void TileMap::setTileMapping(TileMapping* tMap)
     this->tMap = tMap;
 }
 
-//Draw the map
-//TODO: This makes too many draw calls to the GPU, blit all screen objects to a
-//memory surface, then blit this object to the screen.  This will result in 1
-//draw call to the GPU instead of:
-//(screenWidthInTiles * screenHeightInTiles) draw calls
-//This should be significantly faster.
+//Draw the map to the specified display
 void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 {
 
