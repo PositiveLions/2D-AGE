@@ -231,7 +231,7 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 
 }
 
-//TODO: add safeties for not loading screens that arent there
+//Changes necessary data so that DrawMap() will draw the next screen
 void TileMap::changeScreen(DIRECTION direction)
 {
 
