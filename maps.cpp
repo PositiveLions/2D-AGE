@@ -215,24 +215,18 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 
     if(needsUpdate)
     {
+
         al_set_target_bitmap(loadedScreen);
 
-        al_clear_to_color(al_map_rgb(0, 0, 0));
-
-        //for all tiles
-        for(unsigned int t = 0; t <= ((screenWidthInTiles * screenHeightInTiles) - 1); t++)
+        //for every row
+        for(unsigned int y = 0; y <= (screenHeightInTiles - 1); y++)
         {
-            //for every column
-            for(unsigned int y = 0; y <= (screenHeightInTiles - 1); y++)
+            //each tile
+            for(unsigned int x = 0; x <= (screenWidthInTiles - 1); x++)
             {
-                //each row
-                for(unsigned int x = 0; x <= (screenWidthInTiles - 1); x++)
-                {
-                    tileKey = screens[currentScreen]->getTile(t)->getKey();
+                tileKey = screens[currentScreen]->getTile((screenWidthInTiles * y) + x)->getKey();
 
-                    al_draw_bitmap(tMap->getImage(tileKey), (x * tileDimension), (y * tileDimension), 0);
-                }
-
+                al_draw_bitmap(tMap->getImage(tileKey), (x * tileDimension), (y * tileDimension), 0);
             }
 
         }
