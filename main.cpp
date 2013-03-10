@@ -1,6 +1,7 @@
 #include "allegro5/allegro.h"
 #include "AGE.h"
 #include "maps.h"
+#include "characters.h"
 
 
 /*
@@ -37,6 +38,11 @@ int main(int argc, char* argv[])
     //Set myMap's tileMapping (tileset) to testMapping's
     e.myMap.setTileMapping(&testMapping);
     e.myMap.loadFromFile("test2.map");
+
+
+
+    CharacterFactory<PlayerCharacter> playerCharacterFactory;
+    playerCharacterFactory.createCharacter("player1");
 
 
 

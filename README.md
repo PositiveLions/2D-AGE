@@ -17,7 +17,7 @@ Under Debug build options click on the "Linker settings" tab
 
 Link the following libraries:
 	liballegro-5.0.8-md-debug.a
-	liballegro_mage-5.0.8-md-debug.a
+	liballegro_image-5.0.8-md-debug.a
 	liballegro_font-5.0.8-md-debug.a
 	liballegro_ttf-5.0.8-md-debug.a
 

@@ -218,6 +218,8 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 
         al_set_target_bitmap(loadedScreen);
 
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+
         //for every row
         for(unsigned int y = 0; y <= (screenHeightInTiles - 1); y++)
         {
