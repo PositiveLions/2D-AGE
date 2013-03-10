@@ -128,7 +128,10 @@ class TileMap : public mapBase
         //      values
         void DrawMap(ALLEGRO_DISPLAY* display);
 
-        void changeScreen(DIRECTION direction);
+        bool changeScreen(DIRECTION direction);
+
+        int getScreenWidthPx();
+        int getScreenHeightPx();
 
 
 

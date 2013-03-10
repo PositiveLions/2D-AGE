@@ -21,6 +21,7 @@ class myEngine : public Engine
 
     public:
         myEngine(int w, int h, int dispType) : Engine(w, h, dispType) {}
+
         TileMap myMap;
         CharacterFactory<customPlayer> customPFactory;
 };
@@ -31,7 +32,7 @@ int main(int argc, char* argv[])
 {
 
     //Initialize AGE
-    myEngine e(800, 600, ALLEGRO_WINDOWED);
+    myEngine e(800, 576, ALLEGRO_WINDOWED);
 
     //Create a tileMapping and populate it with data from "test.tmap"
     TileMapping testMapping;
@@ -44,12 +45,10 @@ int main(int argc, char* argv[])
     e.myMap.loadFromFile("test2.map");
 
 
-
-    //CharacterFactory<customPlayer> customPFactory;
     e.customPFactory.createCharacter("player1");
     e.customPFactory.getCharacter("player1")->setImage("test3.png");
-    //e.customPFactory.getCharacter("player1")->getID();
-
+    e.customPFactory.getCharacter("player1")->setXCoord(384);
+    e.customPFactory.getCharacter("player1")->setYCoord(272);
 
 
     //Main game loop
@@ -63,7 +62,7 @@ int main(int argc, char* argv[])
 
         e.myMap.DrawMap(e.getDisplay());
 
-        e.customPFactory.getCharacter("player1")->update();
+        e.customPFactory.getCharacter("player1")->update(e.myMap);
         e.customPFactory.getCharacter("player1")->drawCharacter();
 
 
@@ -76,7 +75,6 @@ int main(int argc, char* argv[])
 
 
 }
-
 
 
 //This is where you put your keyboard input code
@@ -96,6 +94,7 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
                 case ALLEGRO_KEY_RIGHT:
                     //myMap.changeScreen(TileMap::RIGHT);
                     customPFactory.getCharacter("player1")->setXVelocity(1);
+
                     break;
 
                 case ALLEGRO_KEY_LEFT:

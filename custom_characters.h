@@ -5,6 +5,7 @@
 #include "allegro5/allegro_image.h"
 
 #include "characters.h"
+#include "maps.h"
 
 class customPlayer : public PlayerCharacter
 {
@@ -15,6 +16,7 @@ class customPlayer : public PlayerCharacter
         customPlayer(std::string ID) : PlayerCharacter(ID) {}
         void setImage(std::string filename);
         void drawCharacter();
+        void update(TileMap& tileMap);
 
 };
 

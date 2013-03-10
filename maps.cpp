@@ -243,7 +243,7 @@ void TileMap::DrawMap(ALLEGRO_DISPLAY* display)
 }
 
 //Changes necessary data so that DrawMap() will draw the next screen
-void TileMap::changeScreen(DIRECTION direction)
+bool TileMap::changeScreen(DIRECTION direction)
 {
     bool hasFailed = false;
 
@@ -300,7 +300,23 @@ void TileMap::changeScreen(DIRECTION direction)
         needsUpdate = true;
     }
 
+    //return whether or not this function has succeeded (not failed)
+    return (!hasFailed);
+
 }
+
+
+int TileMap::getScreenWidthPx()
+{
+    return al_get_bitmap_width(loadedScreen);
+}
+
+
+int TileMap::getScreenHeightPx()
+{
+    return al_get_bitmap_height(loadedScreen);
+}
+
 
 //Cleans up after TileMap objects
 TileMap::~TileMap()
