@@ -13,6 +13,7 @@ template <typename T> class CharacterFactory
         ~CharacterFactory();    //cleans up the dynamically allocated objects
         void createCharacter(std::string ID);   //adds a new character object
         void destroyCharacter(std::string ID);  //deletes a character object
+        T* getCharacter(std::string ID);
 
 };
 
@@ -21,13 +22,14 @@ template <typename T> class CharacterFactory
 template <typename T> void CharacterFactory<T>::createCharacter(std::string ID)
 {
     //if object is not in the list, put it in the list
-    if(objects.find(ID) != objects.end())
-    {
+    //if(objects.find(ID) != objects.end())
+    //{
         //create the object in memory
-        T* tempPtr = new T(ID);
+        //T* tempPtr = new T(ID);
         //insert the pointer to the object into the objects map
-        objects.insert(std::pair<std::string, T*>(ID, tempPtr));
-    }
+        //objects.insert(std::pair<std::string, T*>(ID, tempPtr));
+        objects.insert(std::pair<std::string, T*>(ID, new T(ID)));
+    //}
 }
 
 
@@ -46,6 +48,12 @@ template <typename T> void CharacterFactory<T>::destroyCharacter(std::string ID)
 }
 
 
+template <typename T> T* CharacterFactory<T>::getCharacter(std::string ID)
+{
+    return objects[ID];
+}
+
+
 //Destructor - Frees all of the objects this tracks and resets the map.
 template <typename T> CharacterFactory<T>::~CharacterFactory()
 {
@@ -53,12 +61,15 @@ template <typename T> CharacterFactory<T>::~CharacterFactory()
     for(typename std::map<std::string, T*>::iterator x = objects.begin(); x != objects.end(); x++)
     {
         //delete the object contained in the value portion of the std::pair
-        delete &x->second;
+        delete x->second;
     }
 
     //empty the entire map of std::pair's
     objects.clear();
 }
+
+
+
 
 
 #endif

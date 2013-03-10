@@ -3,6 +3,9 @@
 #include "maps.h"
 #include "characters.h"
 
+//debug
+#include "custom_characters.h"
+
 
 /*
     Derive a class from the Engine class.  Constructor must match the one below.
@@ -19,6 +22,7 @@ class myEngine : public Engine
     public:
         myEngine(int w, int h, int dispType) : Engine(w, h, dispType) {}
         TileMap myMap;
+        CharacterFactory<customPlayer> customPFactory;
 };
 
 
@@ -41,8 +45,10 @@ int main(int argc, char* argv[])
 
 
 
-    CharacterFactory<PlayerCharacter> playerCharacterFactory;
-    playerCharacterFactory.createCharacter("player1");
+    //CharacterFactory<customPlayer> customPFactory;
+    e.customPFactory.createCharacter("player1");
+    e.customPFactory.getCharacter("player1")->setImage("test3.png");
+    //e.customPFactory.getCharacter("player1")->getID();
 
 
 
@@ -56,6 +62,10 @@ int main(int argc, char* argv[])
 
 
         e.myMap.DrawMap(e.getDisplay());
+
+        e.customPFactory.getCharacter("player1")->update();
+        e.customPFactory.getCharacter("player1")->drawCharacter();
+
 
 
         //Blit the primary surface to the monitor
@@ -84,19 +94,23 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
                     break;
 
                 case ALLEGRO_KEY_RIGHT:
-                    myMap.changeScreen(TileMap::RIGHT);
+                    //myMap.changeScreen(TileMap::RIGHT);
+                    customPFactory.getCharacter("player1")->setXVelocity(1);
                     break;
 
                 case ALLEGRO_KEY_LEFT:
-                    myMap.changeScreen(TileMap::LEFT);
+                    //myMap.changeScreen(TileMap::LEFT);
+                    customPFactory.getCharacter("player1")->setXVelocity(-1);
                     break;
 
                 case ALLEGRO_KEY_UP:
-                    myMap.changeScreen(TileMap::UP);
+                    //myMap.changeScreen(TileMap::UP);
+                    customPFactory.getCharacter("player1")->setYVelocity(-1);
                     break;
 
                 case ALLEGRO_KEY_DOWN:
-                    myMap.changeScreen(TileMap::DOWN);
+                    //myMap.changeScreen(TileMap::DOWN);
+                    customPFactory.getCharacter("player1")->setYVelocity(1);
                     break;
 
                 default:
@@ -108,6 +122,30 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
         case KEY_UP:
             switch(keyCode)
             {
+                case ALLEGRO_KEY_UP:
+                    if(customPFactory.getCharacter("player1")->getYVelocity() < 0)
+                    {
+                        customPFactory.getCharacter("player1")->setYVelocity(0);
+                    }
+                    break;
+                case ALLEGRO_KEY_DOWN:
+                    if(customPFactory.getCharacter("player1")->getYVelocity() > 0)
+                    {
+                        customPFactory.getCharacter("player1")->setYVelocity(0);
+                    }
+                    break;
+                case ALLEGRO_KEY_LEFT:
+                    if(customPFactory.getCharacter("player1")->getXVelocity() < 0)
+                    {
+                        customPFactory.getCharacter("player1")->setXVelocity(0);
+                    }
+                    break;
+                case ALLEGRO_KEY_RIGHT:
+                    if(customPFactory.getCharacter("player1")->getXVelocity() > 0)
+                    {
+                        customPFactory.getCharacter("player1")->setXVelocity(0);
+                    }
+                    break;
 
                 default:
                     break;

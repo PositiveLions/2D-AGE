@@ -11,6 +11,8 @@ class PlayerCharacter
 {
   private:
       std::string ID;
+
+  protected:
       int xCoord;
       int yCoord;
       int xVelocity;
@@ -19,13 +21,17 @@ class PlayerCharacter
   public:
 
       PlayerCharacter(std::string ID);
-      PlayerCharacter(const PlayerCharacter&);
 
-      void getID();
+      std::string getID();
       void setXCoord(int X);
+      int getXCoord();
       void setYCoord(int Y);
+      int getYCoord();
       void setXVelocity(int velocity);
       void setYVelocity(int velocity);
+      int getXVelocity();
+      int getYVelocity();
+      void update();
 
 
 };

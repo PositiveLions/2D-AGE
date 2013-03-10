@@ -10,11 +10,54 @@ PlayerCharacter::PlayerCharacter(std::string ID)
     yVelocity = 0;
 }
 
-PlayerCharacter::PlayerCharacter(const PlayerCharacter& p)
+
+std::string PlayerCharacter::getID()
 {
-    ID = p.ID;
-    xCoord = p.xCoord;
-    yCoord = p.yCoord;
-    xVelocity = p.xVelocity;
-    yVelocity = p.yVelocity;
+    return ID;
+}
+
+void PlayerCharacter::setXCoord(int X)
+{
+    xCoord = X;
+}
+
+int PlayerCharacter::getXCoord()
+{
+    return xCoord;
+}
+
+void PlayerCharacter::setYCoord(int Y)
+{
+    yCoord = Y;
+}
+
+int PlayerCharacter::getYCoord()
+{
+    return yCoord;
+}
+
+void PlayerCharacter::setXVelocity(int velocity)
+{
+    xVelocity = velocity;
+}
+
+void PlayerCharacter::setYVelocity(int velocity)
+{
+    yVelocity = velocity;
+}
+
+int PlayerCharacter::getXVelocity()
+{
+    return xVelocity;
+}
+
+int PlayerCharacter::getYVelocity()
+{
+    return yVelocity;
+}
+
+void PlayerCharacter::update()
+{
+    xCoord += xVelocity;
+    yCoord += yVelocity;
 }
