@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
 
     e.customPFactory.createCharacter("player1");
-    e.customPFactory.getCharacter("player1")->setImage("test3.png");
+    e.customPFactory.getCharacter("player1")->animations.loadFromFile("main_character.chr");
     e.customPFactory.getCharacter("player1")->setXCoord(384);
     e.customPFactory.getCharacter("player1")->setYCoord(272);
 

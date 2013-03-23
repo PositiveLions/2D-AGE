@@ -1,6 +1,8 @@
 #ifndef CHARACTER_FACTORY_H
 #define CHARACTER_FACTORY_H
 
+#include <map>
+
 
 //Creates and manages character objects
 template <typename T> class CharacterFactory

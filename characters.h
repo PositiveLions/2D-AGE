@@ -2,7 +2,6 @@
 #define CHARACTERS_H
 
 #include <string>
-#include <map>
 
 #include "character_factory.h"
 
