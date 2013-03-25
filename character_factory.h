@@ -15,7 +15,7 @@ template <typename T> class CharacterFactory
         ~CharacterFactory();    //cleans up the dynamically allocated objects
         void createCharacter(std::string ID);   //adds a new character object
         void destroyCharacter(std::string ID);  //deletes a character object
-        T* getCharacter(std::string ID);
+        T* getCharacter(std::string ID);  //returns a character by it's ID
 
 };
 
@@ -23,15 +23,7 @@ template <typename T> class CharacterFactory
 //Creates a character to be referenced by the specified ID (string)
 template <typename T> void CharacterFactory<T>::createCharacter(std::string ID)
 {
-    //if object is not in the list, put it in the list
-    //if(objects.find(ID) != objects.end())
-    //{
-        //create the object in memory
-        //T* tempPtr = new T(ID);
-        //insert the pointer to the object into the objects map
-        //objects.insert(std::pair<std::string, T*>(ID, tempPtr));
         objects.insert(std::pair<std::string, T*>(ID, new T(ID)));
-    //}
 }
 
 
@@ -50,13 +42,14 @@ template <typename T> void CharacterFactory<T>::destroyCharacter(std::string ID)
 }
 
 
+//Returns the character object with the specified name
 template <typename T> T* CharacterFactory<T>::getCharacter(std::string ID)
 {
     return objects[ID];
 }
 
 
-//Destructor - Frees all of the objects this tracks and resets the map.
+//Destructor - Frees all of the objects this tracks and empties the map.
 template <typename T> CharacterFactory<T>::~CharacterFactory()
 {
     //for every std::pair in the map
@@ -69,9 +62,6 @@ template <typename T> CharacterFactory<T>::~CharacterFactory()
     //empty the entire map of std::pair's
     objects.clear();
 }
-
-
-
 
 
 #endif

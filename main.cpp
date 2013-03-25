@@ -38,13 +38,12 @@ int main(int argc, char* argv[])
     TileMapping testMapping;
     testMapping.loadFromFile("test.tmap");
 
-    //Create a map named "Test Map" from the file "test.map"
-    //TileMap myMap("Test Map", "test2.map");
+    //Create a map named "Test Map" from the file "test2.map"
+    e.myMap.loadFromFile("test2.map");
     //Set myMap's tileMapping (tileset) to testMapping's
     e.myMap.setTileMapping(&testMapping);
-    e.myMap.loadFromFile("test2.map");
 
-
+    //Create, load, and initialize a character through the character factory
     e.customPFactory.createCharacter("player1");
     e.customPFactory.getCharacter("player1")->animations.loadFromFile("main_character.chr");
     e.customPFactory.getCharacter("player1")->setXCoord(384);
@@ -58,20 +57,16 @@ int main(int argc, char* argv[])
         e.handleDisplayEvents();
         e.handleKeyboardEvents();
 
-
-
-        e.myMap.DrawMap(e.getDisplay());
-
+        //Logic
         e.customPFactory.getCharacter("player1")->update(e.myMap);
+
+        //Drawing
+        e.myMap.DrawMap(e.getDisplay());
         e.customPFactory.getCharacter("player1")->drawCharacter();
-
-
 
         //Blit the primary surface to the monitor
         al_flip_display();
     }
-
-
 
 
 }
@@ -88,27 +83,26 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
             switch(keyCode)
             {
                 case ALLEGRO_KEY_ESCAPE:
-                    isRunning = false;
+                    isRunning = false;  //quit
                     break;
 
                 case ALLEGRO_KEY_RIGHT:
-                    //myMap.changeScreen(TileMap::RIGHT);
+                    //Positive velocity on X-axis
                     customPFactory.getCharacter("player1")->setXVelocity(1);
-
                     break;
 
                 case ALLEGRO_KEY_LEFT:
-                    //myMap.changeScreen(TileMap::LEFT);
+                    //Negative velocity on X-axis
                     customPFactory.getCharacter("player1")->setXVelocity(-1);
                     break;
 
                 case ALLEGRO_KEY_UP:
-                    //myMap.changeScreen(TileMap::UP);
+                    //Negative velocity on Y-axis
                     customPFactory.getCharacter("player1")->setYVelocity(-1);
                     break;
 
                 case ALLEGRO_KEY_DOWN:
-                    //myMap.changeScreen(TileMap::DOWN);
+                    //Positive velocity on Y-axis
                     customPFactory.getCharacter("player1")->setYVelocity(1);
                     break;
 
@@ -122,24 +116,28 @@ void myEngine::keyboardInput(KEYBOARD_EVENT_TYPE kbdEventType, int keyCode)
             switch(keyCode)
             {
                 case ALLEGRO_KEY_UP:
+                    //Clear velocity on Y-axis if velocity on Y axis is negative
                     if(customPFactory.getCharacter("player1")->getYVelocity() < 0)
                     {
                         customPFactory.getCharacter("player1")->setYVelocity(0);
                     }
                     break;
                 case ALLEGRO_KEY_DOWN:
+                    //Clear velocity on Y-axis if velocity on Y axis is positive
                     if(customPFactory.getCharacter("player1")->getYVelocity() > 0)
                     {
                         customPFactory.getCharacter("player1")->setYVelocity(0);
                     }
                     break;
                 case ALLEGRO_KEY_LEFT:
+                    //Clear velocity on X-axis if velocity on X-axis is negative
                     if(customPFactory.getCharacter("player1")->getXVelocity() < 0)
                     {
                         customPFactory.getCharacter("player1")->setXVelocity(0);
                     }
                     break;
                 case ALLEGRO_KEY_RIGHT:
+                    //Clear velocity on X-axis if velocity on X-axis is positive
                     if(customPFactory.getCharacter("player1")->getXVelocity() > 0)
                     {
                         customPFactory.getCharacter("player1")->setXVelocity(0);

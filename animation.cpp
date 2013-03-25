@@ -43,7 +43,6 @@ Animation::~Animation()
     for(std::vector<ALLEGRO_BITMAP*>::iterator i = images.begin(); i != images.end(); i++)
     {
         al_destroy_bitmap(*i);
-        images.erase(i);
     }
 
     images.clear();
@@ -129,18 +128,15 @@ void CharacterAnimations::loadFromFile(std::string filename)
 }
 
 
-//THIS NEEDS TO BE FIXED - Something is wrong with deletions of dynamically
-//  allocated Animation objects.  Causes a segmentation fault.  The code is
-//  commented out to prevent crashes until i fix this.
+
 CharacterAnimations::~CharacterAnimations()
 {
-    /*
+
     for(std::map<std::string, Animation*>::iterator i = animations.begin(); i != animations.end(); i++)
     {
-        //delete i->second;
-        animations.erase(i);
+        delete i->second;
     }
-    */
+
 
     animations.clear();
 }
